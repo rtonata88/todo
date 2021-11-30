@@ -1,14 +1,38 @@
-import _ from "lodash";
-import "./style.css";
+import './style.css';
 
-function component() {
-  const element = document.createElement("div");
+const tasks = [
+  {
+    description: 'Finish the farms report',
+    completed: false,
+    index: 0,
+  },
+  {
+    description: 'Implement pagination on the reports section',
+    completed: false,
+    index: 1,
+  },
+  {
+    description: 'Complete the application form',
+    completed: false,
+    index: 2,
+  },
+  {
+    description: 'Implement the biographicals report',
+    completed: false,
+    index: 3,
+  },
+];
 
-  // Lodash, now imported by this script
-  element.innerHTML = _.join(["Hello", "webpack"], " ");
-  element.classList.add("hello");
+const main = () => {
+  let template = '';
+  tasks.forEach((item) => {
+    template += `<div class="tasks">
+                  <input type="checkbox" name="" id=""> ${item.description}
+                </div>`;
+  });
 
-  return element;
-}
+  const taskListContainer = document.getElementById('taskListContainer');
+  taskListContainer.innerHTML = template;
+};
 
-document.body.appendChild(component());
+window.onload = main;
