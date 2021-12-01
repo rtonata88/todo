@@ -23,7 +23,8 @@ export const toggleTaskCompleteStatus = (taskId, checkboxValue) => {
   let tasks = JSON.parse(localStorage.getItem("tasks"));
 
   tasks.forEach((task) => {
-    if (task.index === taskId) {
+    if (task.index == taskId) {
+      console.log(task);
       checkboxValue ? (task.completed = true) : (task.completed = false);
     }
   });

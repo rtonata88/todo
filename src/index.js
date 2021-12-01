@@ -16,7 +16,9 @@ const main = () => {
 
   const checkboxes = document.querySelectorAll(".task-status");
   checkboxes.forEach((checkbox) => {
-    console.log(checkbox);
+    checkbox.addEventListener("change", () => {
+      toggleTaskCompleteStatus(checkbox.dataset.id, checkbox.checked);
+    });
   });
 };
 
