@@ -1,17 +1,17 @@
-/**
- * Adds a task to the list of tasks
- * @param {*} taskDescription - The task description to be added
- */
 export const addTask = (taskDescription) => {
-    let tasks = JSON.parse(localStorage.getItem("tasks"));
+  let tasks = JSON.parse(localStorage.getItem("tasks"))
+    ? JSON.parse(localStorage.getItem("tasks"))
+    : [];
 
-    let task = {
-        description: taskDescription,
-        completed: false,
-        index: tasks.length - 1,
-      },
-    tasks.push(task);
-    storeTask(tasks);
+  let task = {
+    description: taskDescription,
+    completed: false,
+    index: tasks.length,
+  };
+  tasks.push(task);
+  storeTask(tasks);
+
+  displayTasks();
 };
 
 /**
@@ -36,31 +36,32 @@ export const toggleTaskCompleteStatus = (taskId, checkboxValue) => {
  * @param {*} taskId - The Index ID of the task to be deleted
  */
 export const deleteTask = (taskId) => {
-    let tasks = JSON.parse(localStorage.getItem("tasks"));
+  let tasks = JSON.parse(localStorage.getItem("tasks"));
 
-    tasks.forEach((task, arrayIndex) => {
-      if (task.index === taskId) {
-        tasks.splice(arrayIndex, 1);
-      }
-    });
+  tasks.forEach((task, arrayIndex) => {
+    if (task.index === taskId) {
+      tasks.splice(arrayIndex, 1);
+    }
+  });
 
-    storeTask(tasks);
+  storeTask(tasks);
 
-    displayTasks();
-}
+  displayTasks();
+};
 
 export const displayTasks = () => {
-    let template = "";
-    let tasks = JSON.parse(localStorage.getItem("tasks"));
+  let template = "";
+  let tasks = JSON.parse(localStorage.getItem("tasks"));
+  if (tasks) {
     tasks.forEach((task) => {
-        template += `<div class="tasks">
+      template += `<div class="tasks">
                     <input type="checkbox" class="task-status"  data-id="${task.index}"> ${task.description}
                     </div>`;
     });
-
-    const taskListContainer = document.getElementById("taskListContainer");
-    taskListContainer.innerHTML = template;
-}
+  }
+  const taskListContainer = document.getElementById("taskListContainer");
+  taskListContainer.innerHTML = template;
+};
 
 /**
  * Stores the array of task objects to the localStorage

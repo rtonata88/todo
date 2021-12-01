@@ -1,5 +1,5 @@
 import "./style.css";
-import { addTasks, toggleTaskCompleteStatus, displayTasks } from "./task.js";
+import { addTask, toggleTaskCompleteStatus, displayTasks } from "./task.js";
 
 const main = () => {
   //Display the tasks on page load
@@ -8,9 +8,10 @@ const main = () => {
   const taskInput = document.getElementById("task-input");
 
   taskInput.addEventListener("keyup", (e) => {
-    if (e.key === 13) {
-      addTasks(taskInput.value);
+    if (e.key === "Enter") {
+      addTask(taskInput.value);
     }
+    taskInput.value = "";
   });
 
   const checkboxes = document.querySelectorAll(".task-status");
