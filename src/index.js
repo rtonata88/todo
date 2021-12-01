@@ -1,38 +1,18 @@
 import './style.css';
-
-const tasks = [
-  {
-    description: 'Finish the farms report',
-    completed: false,
-    index: 0,
-  },
-  {
-    description: 'Implement pagination on the reports section',
-    completed: false,
-    index: 1,
-  },
-  {
-    description: 'Complete the application form',
-    completed: false,
-    index: 2,
-  },
-  {
-    description: 'Implement the biographicals report',
-    completed: false,
-    index: 3,
-  },
-];
+import { addTask, displayTasks } from './task.js';
 
 const main = () => {
-  let template = '';
-  tasks.forEach((item) => {
-    template += `<div class="tasks">
-                  <input type="checkbox" name="" id=""> ${item.description}
-                </div>`;
-  });
+  // Display the tasks on page load
+  displayTasks();
 
-  const taskListContainer = document.getElementById('taskListContainer');
-  taskListContainer.innerHTML = template;
+  const taskInput = document.getElementById('task-input');
+
+  taskInput.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+      addTask(taskInput.value);
+      taskInput.value = '';
+    }
+  });
 };
 
 window.onload = main;

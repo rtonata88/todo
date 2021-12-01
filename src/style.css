@@ -25,3 +25,7 @@ h1 {
   align-items: center;
   padding: 10px;
 }
+
+.complete {
+  text-decoration: line-through;
+}
