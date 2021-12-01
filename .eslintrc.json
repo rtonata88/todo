@@ -16,6 +16,14 @@
         "no-shadow": "off",
         "no-param-reassign": "off",
         "eol-last": "off",
+        "no-use-before-define": [
+            "error",
+            {
+                "functions": false,
+                "classes": false,
+                "variables": false
+            }
+        ],
         "import/extensions": [
             1,
             {
