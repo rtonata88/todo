@@ -45,6 +45,21 @@ export const deleteTask = (taskId) => {
     });
 
     storeTask(tasks);
+
+    displayTasks();
+}
+
+export const displayTasks = () => {
+    let template = "";
+    let tasks = JSON.parse(localStorage.getItem("tasks"));
+    tasks.forEach((task) => {
+        template += `<div class="tasks">
+                    <input type="checkbox" class="task-status"  data-id="${task.index}"> ${task.description}
+                    </div>`;
+    });
+
+    const taskListContainer = document.getElementById("taskListContainer");
+    taskListContainer.innerHTML = template;
 }
 
 /**
