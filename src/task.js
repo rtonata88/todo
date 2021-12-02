@@ -3,7 +3,7 @@
  * @param {*} tasks - the array of objects to store
  */
 const storeTask = (tasks) => {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
+  localStorage.setItem("tasks", JSON.stringify(tasks));
 };
 /**
  * Marks the task as complete if task was incomplete or marks incomplete if task was complete
@@ -11,7 +11,7 @@ const storeTask = (tasks) => {
  * @param {*} checkboxValue - the value True/False of the checkbox
  */
 export const toggleTaskCompleteStatus = (taskId, checkboxValue) => {
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
+  const tasks = JSON.parse(localStorage.getItem("tasks"));
 
   tasks.forEach((task) => {
     if (task.index === parseInt(taskId, 10)) {
@@ -29,34 +29,39 @@ export const toggleTaskCompleteStatus = (taskId, checkboxValue) => {
 };
 
 export const displayTasks = () => {
-  let template = '';
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
+  let template = "";
+  const tasks = JSON.parse(localStorage.getItem("tasks"));
   if (tasks) {
     tasks.forEach((task) => {
       template += `<div class="tasks">
                     <input type="checkbox" class="task-status" ${
-  task.completed ? 'checked' : ''
-} data-id="${task.index}"> 
-                        <span ${task.completed ? "class='complete'" : ''}>
+                      task.completed ? "checked" : ""
+                    } data-id="${task.index}"> 
+                        <span ${task.completed ? "class='complete'" : ""}>
                             ${task.description}
                         </span>
+                        <textarea class="textarea" data-id="${
+                          task.index
+                        }" cols="40">${task.description}</textarea>
                     </div>`;
     });
   }
-  const taskListContainer = document.getElementById('taskListContainer');
+  const taskListContainer = document.getElementById("taskListContainer");
   taskListContainer.innerHTML = template;
 
-  const checkboxes = document.querySelectorAll('.task-status');
+  const checkboxes = document.querySelectorAll(".task-status");
   [...checkboxes].forEach((checkbox) => {
-    checkbox.addEventListener('change', (e) => {
+    checkbox.addEventListener("change", (e) => {
       toggleTaskCompleteStatus(e.target.dataset.id, e.target.checked);
     });
   });
+
+  editTask();
 };
 
 export const addTask = (taskDescription) => {
-  const tasks = JSON.parse(localStorage.getItem('tasks'))
-    ? JSON.parse(localStorage.getItem('tasks'))
+  const tasks = JSON.parse(localStorage.getItem("tasks"))
+    ? JSON.parse(localStorage.getItem("tasks"))
     : [];
 
   const task = {
@@ -70,20 +75,17 @@ export const addTask = (taskDescription) => {
   displayTasks();
 };
 
-/**
- * Delete the selected task
- * @param {*} taskId - The Index ID of the task to be deleted
- */
-export const deleteTask = (taskId) => {
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
+const editTask = () => {
+  let tasks = JSON.parse(localStorage.getItem("tasks"));
+  const textareas = document.querySelectorAll("textarea");
 
-  tasks.forEach((task, arrayIndex) => {
-    if (task.index === taskId) {
-      tasks.splice(arrayIndex, 1);
-    }
+  [...textareas].forEach((textarea, index) => {
+    textarea.addEventListener("change", (e) => {
+      if (tasks[index].index === parseInt(e.target.dataset.id, 10)) {
+        tasks[index].description = textarea.value;
+        storeTask(tasks);
+        displayTasks();
+      }
+    });
   });
-
-  storeTask(tasks);
-
-  // displayTasks();
 };
