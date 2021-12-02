@@ -42,7 +42,12 @@ export const displayTasks = () => {
                         </span>
                         <textarea class="textarea" data-id="${
                           task.index
-                        }" cols="40">${task.description}</textarea>
+                        }" cols="30">${task.description}</textarea>
+                      <button type="button" class="delete-button" data-id="${
+                        task.index
+                      }" > 
+                          <i class="far fa-trash-alt" ></i>
+                      </button>
                     </div>`;
     });
   }
@@ -57,6 +62,7 @@ export const displayTasks = () => {
   });
 
   editTask();
+  deleteTask();
 };
 
 export const addTask = (taskDescription) => {
@@ -88,4 +94,32 @@ const editTask = () => {
       }
     });
   });
+};
+
+/**
+ * Delete the selected task
+ * @param {*} taskId - The Index ID of the task to be deleted
+ */
+const deleteTask = () => {
+  let tasks = JSON.parse(localStorage.getItem("tasks"));
+  const deleteButtons = document.querySelectorAll(".delete-button");
+
+  [...deleteButtons].forEach((button, index) => {
+    button.addEventListener("click", (e) => {
+      e.preventDefault();
+      let taskId = parseInt(button.dataset.id, 10);
+      tasks.splice(taskId, 1); //Delete the selected task
+      tasks = reIndex(tasks); //re-index the array
+      storeTask(tasks); //Store a re-indexed array back to the storage
+      displayTasks();
+    });
+  });
+};
+
+const reIndex = (tasks) => {
+  tasks.forEach((task, index) => {
+    task.index = index;
+  });
+
+  return tasks;
 };

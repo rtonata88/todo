@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/rtonata88/webpack#readme",
   "devDependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.4",
     "babel-eslint": "^10.1.0",
     "css-loader": "^6.5.1",
     "eslint": "^7.32.0",
