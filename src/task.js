@@ -50,7 +50,14 @@ export const displayTasks = () => {
                       </button>
                     </div>`;
     });
+
+    const clearAllContainer = document.getElementById("clear-all");
+    clearAllContainer.style.display = "block";
+  } else {
+    const clearAllContainer = document.getElementById("clear-all");
+    clearAllContainer.style.display = "none";
   }
+
   const taskListContainer = document.getElementById("taskListContainer");
   taskListContainer.innerHTML = template;
 
@@ -104,7 +111,7 @@ const deleteTask = () => {
   let tasks = JSON.parse(localStorage.getItem("tasks"));
   const deleteButtons = document.querySelectorAll(".delete-button");
 
-  [...deleteButtons].forEach((button, index) => {
+  deleteButtons.forEach((button, index) => {
     button.addEventListener("click", (e) => {
       e.preventDefault();
       let taskId = parseInt(button.dataset.id, 10);
@@ -116,10 +123,17 @@ const deleteTask = () => {
   });
 };
 
+export const clearCompleted = () => {
+  let tasks = JSON.parse(localStorage.getItem("tasks"));
+  let incompleteTasks = tasks.filter((task) => task.completed === false);
+  tasks = reIndex(incompleteTasks);
+  storeTask(tasks);
+  displayTasks();
+};
+
 const reIndex = (tasks) => {
   tasks.forEach((task, index) => {
     task.index = index;
   });
-
   return tasks;
 };

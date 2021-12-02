@@ -2,9 +2,8 @@ import "@fortawesome/fontawesome-free/js/fontawesome";
 import "@fortawesome/fontawesome-free/js/solid";
 import "@fortawesome/fontawesome-free/js/regular";
 import "@fortawesome/fontawesome-free/js/brands";
-
 import "./style.css";
-import { addTask, displayTasks } from "./task.js";
+import { addTask, displayTasks, clearCompleted } from "./task.js";
 
 const main = () => {
   // Display the tasks on page load
@@ -17,6 +16,12 @@ const main = () => {
       addTask(taskInput.value);
       taskInput.value = "";
     }
+  });
+
+  const clearAllButton = document.getElementById("clear-all-btn");
+  clearAllButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    clearCompleted();
   });
 };
 
