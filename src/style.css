@@ -1,11 +1,20 @@
 body {
   font-family: 'Open Sans', 'Lucida Grande', tahoma, verdana, arial, sans-serif;
   background-color: rgb(249, 250, 251);
+  margin-top: 20px;
 }
 
-h1 {
-  font-size: 16px;
+.heading{
+  display: flex;
+  justify-content: flex-start;
+  align-items: start;
+  width: 100%;
   border-bottom: 1px solid #eee;
+  margin-left: 10px;
+}
+h1 {
+  font-size: 14px;
+  font-weight: normal;
 }
 
 .list-container {
@@ -16,16 +25,91 @@ h1 {
   border: 1px solid rgb(197, 202, 207);
   background: rgb(255, 255, 255);
   border-radius: 5px;
-  padding: 10px;
   align-items: center;
   width: 30%;
 }
 
+.tasks-container {
+  display:flex;
+  justify-content: flex-start;
+  gap: 10px;
+  flex-direction: column;
+  width: 100%;
+}
+
 .tasks {
-  align-items: center;
-  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  height: 55px;
+  align-items:center;
 }
 
 .complete {
   text-decoration: line-through;
 }
+
+.input-container{
+  width:100%;
+  height:55px;
+  border-bottom: 1px solid #eee;
+}
+
+.task_input{
+  height: 50px;
+  width: 90%;
+  border: 0;
+  font-size: 18px;
+}
+
+.task_input::placeholder {
+  font-style: italic;
+}
+
+.task_input:focus {
+  outline: none;
+}
+
+.hide{
+  display: none;
+}
+
+textarea{
+  border: 0;
+  width: 90%;
+  resize: none;
+  height: auto;
+  font-size: 18px;
+}
+
+
+textarea:focus {
+  outline: none;
+  background-color: #fff3bf;
+}
+
+
+.delete-button{
+  background: rgba(255, 255, 255, 0.1);
+  border: 0;
+}
+
+.clear-all{
+  width: 100%;
+  background-color: #eee;
+  text-align: center;
+}
+
+.clear-all:hover{
+  cursor: pointer;
+}
+
+#clear-all-btn{
+  margin: auto;
+  align-self: center;
+  padding: 15px;
+  cursor: pointer;
+  border: 0;
+  background: rgba(255, 255, 255, 0.1);
+}
+

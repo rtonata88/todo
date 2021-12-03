@@ -31,18 +31,22 @@ export const toggleTaskCompleteStatus = (taskId, checkboxValue) => {
 export const displayTasks = () => {
   let template = "";
   const tasks = JSON.parse(localStorage.getItem("tasks"));
-  if (tasks) {
+
+  if (tasks.length) {
     tasks.forEach((task) => {
-      template += `<div class="tasks">
+      template += `<div class="tasks" data-id="${task.index}">
                     <input type="checkbox" class="task-status" ${
                       task.completed ? "checked" : ""
                     } data-id="${task.index}"> 
-                        <span ${task.completed ? "class='complete'" : ""}>
-                            ${task.description}
-                        </span>
-                        <textarea class="textarea" data-id="${
-                          task.index
-                        }" cols="30">${task.description}</textarea>
+                       
+                        <textarea ${
+                          task.completed
+                            ? "class='textarea complete'"
+                            : "class='textarea'"
+                        }" id="${task.index}" 
+                        data-id="${task.index}" rows="1">${
+        task.description
+      }</textarea>
                       <button type="button" class="delete-button" data-id="${
                         task.index
                       }" > 
@@ -65,6 +69,24 @@ export const displayTasks = () => {
   [...checkboxes].forEach((checkbox) => {
     checkbox.addEventListener("change", (e) => {
       toggleTaskCompleteStatus(e.target.dataset.id, e.target.checked);
+    });
+  });
+
+  const deleteButtons = document.querySelectorAll(".delete-button");
+  const textarea = document.querySelectorAll("textarea");
+  [...textarea].forEach((textarea) => {
+    textarea.addEventListener("focusin", (e) => {
+      textarea.classList.remove("complete");
+      textarea.parentElement.style.background = "#fff3bf";
+    });
+  });
+
+  [...textarea].forEach((textarea) => {
+    textarea.addEventListener("focusout", (e) => {
+      textarea.parentElement.style.background = "";
+      if (tasks[textarea.dataset.id].completed) {
+        textarea.classList.add("complete");
+      }
     });
   });
 

@@ -13,8 +13,10 @@ const main = () => {
 
   taskInput.addEventListener("keyup", (e) => {
     if (e.key === "Enter") {
-      addTask(taskInput.value);
-      taskInput.value = "";
+      if (/\w/.test(taskInput.value)) {
+        addTask(taskInput.value);
+        taskInput.value = "";
+      }
     }
   });
 
