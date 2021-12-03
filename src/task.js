@@ -31,18 +31,37 @@ export const toggleTaskCompleteStatus = (taskId, checkboxValue) => {
 export const displayTasks = () => {
   let template = '';
   const tasks = JSON.parse(localStorage.getItem('tasks'));
-  if (tasks) {
+
+  if (tasks.length) {
     tasks.forEach((task) => {
-      template += `<div class="tasks">
+      template += `<div class="tasks" data-id="${task.index}">
                     <input type="checkbox" class="task-status" ${
   task.completed ? 'checked' : ''
 } data-id="${task.index}"> 
-                        <span ${task.completed ? "class='complete'" : ''}>
-                            ${task.description}
-                        </span>
+                       
+                        <textarea ${
+  task.completed
+    ? "class='textarea complete'"
+    : "class='textarea'"
+}" id="${task.index}" 
+                        data-id="${task.index}" rows="1">${
+  task.description
+}</textarea>
+                      <button type="button" class="delete-button" data-id="${
+  task.index
+}" > 
+                          <i class="far fa-trash-alt" ></i>
+                      </button>
                     </div>`;
     });
+
+    const clearAllContainer = document.getElementById('clear-all');
+    clearAllContainer.style.display = 'block';
+  } else {
+    const clearAllContainer = document.getElementById('clear-all');
+    clearAllContainer.style.display = 'none';
   }
+
   const taskListContainer = document.getElementById('taskListContainer');
   taskListContainer.innerHTML = template;
 
@@ -52,6 +71,26 @@ export const displayTasks = () => {
       toggleTaskCompleteStatus(e.target.dataset.id, e.target.checked);
     });
   });
+
+  const textarea = document.querySelectorAll('textarea');
+  [...textarea].forEach((textarea) => {
+    textarea.addEventListener('focusin', () => {
+      textarea.classList.remove('complete');
+      textarea.parentElement.style.background = '#fff3bf';
+    });
+  });
+
+  [...textarea].forEach((textarea) => {
+    textarea.addEventListener('focusout', () => {
+      textarea.parentElement.style.background = '';
+      if (tasks[textarea.dataset.id].completed) {
+        textarea.classList.add('complete');
+      }
+    });
+  });
+
+  editTask();
+  deleteTask();
 };
 
 export const addTask = (taskDescription) => {
@@ -70,20 +109,52 @@ export const addTask = (taskDescription) => {
   displayTasks();
 };
 
+const editTask = () => {
+  const tasks = JSON.parse(localStorage.getItem('tasks'));
+  const textareas = document.querySelectorAll('textarea');
+
+  [...textareas].forEach((textarea, index) => {
+    textarea.addEventListener('change', (e) => {
+      if (tasks[index].index === parseInt(e.target.dataset.id, 10)) {
+        tasks[index].description = textarea.value;
+        storeTask(tasks);
+        displayTasks();
+      }
+    });
+  });
+};
+
 /**
  * Delete the selected task
  * @param {*} taskId - The Index ID of the task to be deleted
  */
-export const deleteTask = (taskId) => {
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
+const deleteTask = () => {
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+  const deleteButtons = document.querySelectorAll('.delete-button');
 
-  tasks.forEach((task, arrayIndex) => {
-    if (task.index === taskId) {
-      tasks.splice(arrayIndex, 1);
-    }
+  deleteButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      const taskId = parseInt(button.dataset.id, 10);
+      tasks.splice(taskId, 1); // Delete the selected task
+      tasks = reIndex(tasks); // re-index the array
+      storeTask(tasks); // Store a re-indexed array back to the storage
+      displayTasks();
+    });
   });
+};
 
+export const clearCompleted = () => {
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+  const incompleteTasks = tasks.filter((task) => task.completed === false);
+  tasks = reIndex(incompleteTasks);
   storeTask(tasks);
+  displayTasks();
+};
 
-  // displayTasks();
+const reIndex = (tasks) => {
+  tasks.forEach((task, index) => {
+    task.index = index;
+  });
+  return tasks;
 };
