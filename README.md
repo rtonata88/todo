@@ -3,6 +3,8 @@
 # Todo App
 A simple app that displays your todo tasks with basic features such add, delete, mark complete, mark incomplete, etc.
 
+![screenshot](./app_screenshot.png)
+
 ## Built With
 
 - HTML
