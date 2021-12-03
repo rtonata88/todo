@@ -4,7 +4,7 @@ body {
   margin-top: 20px;
 }
 
-.heading{
+.heading {
   display: flex;
   justify-content: flex-start;
   align-items: start;
@@ -12,6 +12,7 @@ body {
   border-bottom: 1px solid #eee;
   margin-left: 10px;
 }
+
 h1 {
   font-size: 14px;
   font-weight: normal;
@@ -30,7 +31,7 @@ h1 {
 }
 
 .tasks-container {
-  display:flex;
+  display: flex;
   justify-content: flex-start;
   gap: 10px;
   flex-direction: column;
@@ -42,20 +43,20 @@ h1 {
   justify-content: space-between;
   border-bottom: 1px solid #eee;
   height: 55px;
-  align-items:center;
+  align-items: center;
 }
 
 .complete {
   text-decoration: line-through;
 }
 
-.input-container{
-  width:100%;
-  height:55px;
+.input-container {
+  width: 100%;
+  height: 55px;
   border-bottom: 1px solid #eee;
 }
 
-.task_input{
+.task_input {
   height: 50px;
   width: 90%;
   border: 0;
@@ -70,11 +71,11 @@ h1 {
   outline: none;
 }
 
-.hide{
+.hide {
   display: none;
 }
 
-textarea{
+textarea {
   border: 0;
   width: 90%;
   resize: none;
@@ -82,29 +83,27 @@ textarea{
   font-size: 18px;
 }
 
-
 textarea:focus {
   outline: none;
   background-color: #fff3bf;
 }
 
-
-.delete-button{
+.delete-button {
   background: rgba(255, 255, 255, 0.1);
   border: 0;
 }
 
-.clear-all{
+.clear-all {
   width: 100%;
   background-color: #eee;
   text-align: center;
 }
 
-.clear-all:hover{
+.clear-all:hover {
   cursor: pointer;
 }
 
-#clear-all-btn{
+#clear-all-btn {
   margin: auto;
   align-self: center;
   padding: 15px;
@@ -112,4 +111,3 @@ textarea:focus {
   border: 0;
   background: rgba(255, 255, 255, 0.1);
 }
-

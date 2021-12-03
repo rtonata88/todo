@@ -30,6 +30,12 @@
                 "js": "always",
                 "json": "always"
             }
+        ],
+        "import/no-extraneous-dependencies": [
+            1,
+            { 
+                "devDependencies": true
+            }
         ]
     },
     "ignorePatterns": [

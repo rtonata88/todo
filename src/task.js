@@ -3,7 +3,7 @@
  * @param {*} tasks - the array of objects to store
  */
 const storeTask = (tasks) => {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 };
 /**
  * Marks the task as complete if task was incomplete or marks incomplete if task was complete
@@ -11,7 +11,7 @@ const storeTask = (tasks) => {
  * @param {*} checkboxValue - the value True/False of the checkbox
  */
 export const toggleTaskCompleteStatus = (taskId, checkboxValue) => {
-  const tasks = JSON.parse(localStorage.getItem("tasks"));
+  const tasks = JSON.parse(localStorage.getItem('tasks'));
 
   tasks.forEach((task) => {
     if (task.index === parseInt(taskId, 10)) {
@@ -29,63 +29,62 @@ export const toggleTaskCompleteStatus = (taskId, checkboxValue) => {
 };
 
 export const displayTasks = () => {
-  let template = "";
-  const tasks = JSON.parse(localStorage.getItem("tasks"));
+  let template = '';
+  const tasks = JSON.parse(localStorage.getItem('tasks'));
 
   if (tasks.length) {
     tasks.forEach((task) => {
       template += `<div class="tasks" data-id="${task.index}">
                     <input type="checkbox" class="task-status" ${
-                      task.completed ? "checked" : ""
-                    } data-id="${task.index}"> 
+  task.completed ? 'checked' : ''
+} data-id="${task.index}"> 
                        
                         <textarea ${
-                          task.completed
-                            ? "class='textarea complete'"
-                            : "class='textarea'"
-                        }" id="${task.index}" 
+  task.completed
+    ? "class='textarea complete'"
+    : "class='textarea'"
+}" id="${task.index}" 
                         data-id="${task.index}" rows="1">${
-        task.description
-      }</textarea>
+  task.description
+}</textarea>
                       <button type="button" class="delete-button" data-id="${
-                        task.index
-                      }" > 
+  task.index
+}" > 
                           <i class="far fa-trash-alt" ></i>
                       </button>
                     </div>`;
     });
 
-    const clearAllContainer = document.getElementById("clear-all");
-    clearAllContainer.style.display = "block";
+    const clearAllContainer = document.getElementById('clear-all');
+    clearAllContainer.style.display = 'block';
   } else {
-    const clearAllContainer = document.getElementById("clear-all");
-    clearAllContainer.style.display = "none";
+    const clearAllContainer = document.getElementById('clear-all');
+    clearAllContainer.style.display = 'none';
   }
 
-  const taskListContainer = document.getElementById("taskListContainer");
+  const taskListContainer = document.getElementById('taskListContainer');
   taskListContainer.innerHTML = template;
 
-  const checkboxes = document.querySelectorAll(".task-status");
+  const checkboxes = document.querySelectorAll('.task-status');
   [...checkboxes].forEach((checkbox) => {
-    checkbox.addEventListener("change", (e) => {
+    checkbox.addEventListener('change', (e) => {
       toggleTaskCompleteStatus(e.target.dataset.id, e.target.checked);
     });
   });
 
-  const deleteButtons = document.querySelectorAll(".delete-button");
-  const textarea = document.querySelectorAll("textarea");
+  const textarea = document.querySelectorAll('textarea');
   [...textarea].forEach((textarea) => {
-    textarea.addEventListener("focusin", (e) => {
-      textarea.classList.remove("complete");
-      textarea.parentElement.style.background = "#fff3bf";
+    textarea.addEventListener('focusin', () => {
+      textarea.classList.remove('complete');
+      textarea.parentElement.style.background = '#fff3bf';
     });
   });
 
   [...textarea].forEach((textarea) => {
-    textarea.addEventListener("focusout", (e) => {
-      textarea.parentElement.style.background = "";
+    textarea.addEventListener('focusout', () => {
+      textarea.parentElement.style.background = '';
       if (tasks[textarea.dataset.id].completed) {
-        textarea.classList.add("complete");
+        textarea.classList.add('complete');
       }
     });
   });
@@ -95,8 +94,8 @@ export const displayTasks = () => {
 };
 
 export const addTask = (taskDescription) => {
-  const tasks = JSON.parse(localStorage.getItem("tasks"))
-    ? JSON.parse(localStorage.getItem("tasks"))
+  const tasks = JSON.parse(localStorage.getItem('tasks'))
+    ? JSON.parse(localStorage.getItem('tasks'))
     : [];
 
   const task = {
@@ -111,11 +110,11 @@ export const addTask = (taskDescription) => {
 };
 
 const editTask = () => {
-  let tasks = JSON.parse(localStorage.getItem("tasks"));
-  const textareas = document.querySelectorAll("textarea");
+  const tasks = JSON.parse(localStorage.getItem('tasks'));
+  const textareas = document.querySelectorAll('textarea');
 
   [...textareas].forEach((textarea, index) => {
-    textarea.addEventListener("change", (e) => {
+    textarea.addEventListener('change', (e) => {
       if (tasks[index].index === parseInt(e.target.dataset.id, 10)) {
         tasks[index].description = textarea.value;
         storeTask(tasks);
@@ -130,24 +129,24 @@ const editTask = () => {
  * @param {*} taskId - The Index ID of the task to be deleted
  */
 const deleteTask = () => {
-  let tasks = JSON.parse(localStorage.getItem("tasks"));
-  const deleteButtons = document.querySelectorAll(".delete-button");
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+  const deleteButtons = document.querySelectorAll('.delete-button');
 
-  deleteButtons.forEach((button, index) => {
-    button.addEventListener("click", (e) => {
+  deleteButtons.forEach((button) => {
+    button.addEventListener('click', (e) => {
       e.preventDefault();
-      let taskId = parseInt(button.dataset.id, 10);
-      tasks.splice(taskId, 1); //Delete the selected task
-      tasks = reIndex(tasks); //re-index the array
-      storeTask(tasks); //Store a re-indexed array back to the storage
+      const taskId = parseInt(button.dataset.id, 10);
+      tasks.splice(taskId, 1); // Delete the selected task
+      tasks = reIndex(tasks); // re-index the array
+      storeTask(tasks); // Store a re-indexed array back to the storage
       displayTasks();
     });
   });
 };
 
 export const clearCompleted = () => {
-  let tasks = JSON.parse(localStorage.getItem("tasks"));
-  let incompleteTasks = tasks.filter((task) => task.completed === false);
+  let tasks = JSON.parse(localStorage.getItem('tasks'));
+  const incompleteTasks = tasks.filter((task) => task.completed === false);
   tasks = reIndex(incompleteTasks);
   storeTask(tasks);
   displayTasks();
