@@ -13,7 +13,7 @@ A simple app that displays your todo tasks with basic features such add, delete,
 
 ## Live Demo
 
-[Demo link](https://rtonata88.github.io/todo/) 
+[Demo link](https://rtonata88.github.io/todo/dist) 
 
 
 ## Getting Started

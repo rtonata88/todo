@@ -11,7 +11,7 @@ const storeTask = (tasks) => {
  * @param {*} checkboxValue - the value True/False of the checkbox
  */
 export const toggleTaskCompleteStatus = (taskId, checkboxValue) => {
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
   tasks.forEach((task) => {
     if (task.index === parseInt(taskId, 10)) {
@@ -30,7 +30,7 @@ export const toggleTaskCompleteStatus = (taskId, checkboxValue) => {
 
 export const displayTasks = () => {
   let template = '';
-  const tasks = JSON.parse(localStorage.getItem('tasks'));
+  const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
   if (tasks.length) {
     tasks.forEach((task) => {
