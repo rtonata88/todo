@@ -78,9 +78,7 @@ export const displayTasks = () => {
       textarea.classList.remove("complete");
       textarea.parentElement.style.background = "#fff3bf";
     });
-  });
 
-  [...textarea].forEach((textarea) => {
     textarea.addEventListener("focusout", () => {
       textarea.parentElement.style.background = "";
       if (tasks[textarea.dataset.id].completed) {
@@ -136,7 +134,7 @@ const deleteTask = () => {
     button.addEventListener("click", (e) => {
       e.preventDefault();
       const taskId = parseInt(button.dataset.id, 10);
-      tasks.splice(taskId, 1); // Delete the selected task
+      tasks = tasks.filter((task) => task.index !== taskId);
       tasks = reIndex(tasks); // re-index the array
       storeTask(tasks); // Store a re-indexed array back to the storage
       displayTasks();
